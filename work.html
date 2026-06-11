@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio — Natalja | AI Content Creator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #D9CBEA;
+            --primary-dark: #BFAEDC;
+            --background-light: #F5F2FA;
+            --text-dark: #2A2438;
+            --text-medium: #3A324F;
+            --text-light: #FFFFFF;
+            --heading-color: #2B2236;
+            --accent-color: #8B5CF6;
+            --accent-hover: #A855F7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #2B2236 0%, #3A2F4E 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ---- SHIMMER (desktop) ---- */
+        @media (min-width: 769px) {
+            body { position: relative; overflow-x: hidden; }
+            body::before, body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 0;
+            }
+            body::before {
+                opacity: 0.85;
+                background:
+                    repeating-linear-gradient(calc(100deg + var(--a,0deg)), rgba(139,92,246,.10) 0px, rgba(139,92,246,.00) 18px, rgba(217,203,234,.08) 36px, rgba(217,203,234,.00) 54px),
+                    repeating-linear-gradient(calc(20deg + var(--a,0deg)), rgba(168,85,247,.08) 0px, rgba(168,85,247,.00) 22px, rgba(139,92,246,.06) 44px, rgba(139,92,246,.00) 66px);
+                filter: blur(14px) saturate(180%);
+                mix-blend-mode: color-dodge;
+                animation: shimmerMove 14s ease-in-out infinite;
+            }
+            body::after {
+                opacity: 0.70;
+                background: repeating-linear-gradient(calc(70deg + var(--a,0deg)), rgba(217,203,234,.10) 0px, rgba(217,203,234,.00) 28px, rgba(139,92,246,.06) 56px, rgba(139,92,246,.00) 84px);
+                filter: blur(18px) saturate(150%);
+                mix-blend-mode: screen;
+                animation: shimmerMove2 18s ease-in-out infinite;
+            }
+            @keyframes shimmerMove {
+                0%   { transform: translate3d(-2%,-1%,0) scale(1.02); }
+                50%  { transform: translate3d( 2%, 1%,0) scale(1.05); }
+                100% { transform: translate3d(-2%,-1%,0) scale(1.02); }
+            }
+            @keyframes shimmerMove2 {
+                0%   { transform: translate3d( 2%, 1%,0) scale(1.03); }
+                50%  { transform: translate3d(-2%,-1%,0) scale(1.06); }
+                100% { transform: translate3d( 2%, 1%,0) scale(1.03); }
+            }
+        }
+
+        /* ---- CONTAINER ---- */
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 40px 32px;
+            background-color: #F5F2FA;
+            border-radius: 16px;
+            box-shadow: 0 16px 48px rgba(20,15,25,0.4);
+            border: 1px solid rgba(139,92,246,0.1);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- HEADER ---- */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent-hover); }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            letter-spacing: -0.5px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(139,92,246,0.3);
+            white-space: nowrap;
+        }
+        .contact-link:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(168,85,247,0.4);
+        }
+
+        /* ---- NAV TABS ---- */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 36px;
+        }
+
+        .nav-tab {
+            padding: 9px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(43,34,54,0.18);
+            background: transparent;
+            color: var(--text-medium);
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .nav-tab:hover {
+            border-color: rgba(139,92,246,0.4);
+            color: var(--accent-color);
+        }
+        .nav-tab.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 14px rgba(139,92,246,0.3);
+        }
+
+        /* ---- SECTION ---- */
+        .section { display: none; }
+        .section.active { display: block; animation: fadeInUp 0.4s ease-out; }
+
+        .section-desc {
+            text-align: center;
+            font-size: 0.92rem;
+            color: var(--text-medium);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        /* ---- GRID: VERTICAL 9:16 ---- */
+        .grid-vertical {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        /* ---- GRID: HORIZONTAL 16:9 ---- */
+        .grid-horizontal {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* ---- GRID: MIXED (vertical + horizontal в одном разделе) ---- */
+        .grid-mixed {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        /* ---- VIDEO CARD ---- */
+        .video-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.55);
+            border: 1px solid rgba(43,34,54,0.10);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(139,92,246,0.18);
+        }
+
+        /* Thumbnail wrapper — соотношение сторон задаётся классом */
+        .thumb {
+            position: relative;
+            overflow: hidden;
+            background: #2B2236;
+        }
+        .thumb-916 { aspect-ratio: 9 / 16; }
+        .thumb-169 { aspect-ratio: 16 / 9; }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .video-card:hover .thumb img { transform: scale(1.04); }
+
+        /* Play overlay */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(43,34,54,0.25);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .video-card:hover .play-overlay { opacity: 1; }
+
+        .play-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(139,92,246,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 16px rgba(139,92,246,0.5);
+        }
+        .play-btn::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 9px 0 9px 16px;
+            border-color: transparent transparent transparent white;
+            margin-left: 3px;
+        }
+
+        /* Badge (client / competition) */
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+        .badge-client {
+            background: rgba(139,92,246,0.9);
+            color: white;
+        }
+        .badge-award {
+            background: rgba(234,179,8,0.9);
+            color: #1a1000;
+        }
+
+        /* Card info */
+        .card-info {
+            padding: 12px 14px;
+        }
+        .card-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .card-tools {
+            font-size: 0.78rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* ---- SINGLE FEATURE (Music Video) ---- */
+        .feature-card {
+            max-width: 640px;
+            margin: 0 auto;
+            border-radius: 14px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.55);
+            border: 1px solid rgba(139,92,246,0.2);
+            box-shadow: 0 8px 28px rgba(139,92,246,0.12);
+        }
+        .feature-card .thumb-169 { aspect-ratio: 16/9; }
+        .feature-info {
+            padding: 20px 22px;
+            text-align: center;
+        }
+        .feature-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .feature-info p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+        .feature-info .card-tools { font-size: 0.85rem; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .grid-vertical { grid-template-columns: repeat(2, 1fr); }
+            .grid-mixed    { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .container { margin: 20px; padding: 24px 18px; }
+            .page-title { font-size: 1.4rem; }
+            .grid-horizontal { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 540px) {
+            .grid-vertical { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .grid-mixed    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .nav-tab { padding: 8px 14px; font-size: 0.82rem; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-title { text-align: left; }
+        }
+        @media (max-width: 380px) {
+            .grid-vertical { grid-template-columns: 1fr; }
+            .grid-mixed    { grid-template-columns: 1fr; }
+        }
+
+        /* ---- MODAL LIGHTBOX ---- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(20, 10, 35, 0.88);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            animation: modalFadeIn 0.25s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 860px;
+            background: #1E1530;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.2);
+            animation: modalSlideUp 0.28s ease-out;
+        }
+        @keyframes modalSlideUp {
+            from { transform: translateY(24px); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        .modal-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .modal-yt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 16px;
+            background: #FF0000;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: background 0.2s ease;
+        }
+        .modal-yt-btn:hover { background: #cc0000; }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+        .modal-close:hover {
+            background: rgba(139,92,246,0.5);
+            border-color: rgba(139,92,246,0.6);
+        }
+
+        .modal-video {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+        .modal-video iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Mobile: full-width, taller feel */
+        @media (max-width: 600px) {
+            .modal-overlay { padding: 0; align-items: flex-end; }
+            .modal-box {
+                border-radius: 16px 16px 0 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <a href="index.html" class="back-link">← Home</a>
+        <h1 class="page-title">AI Video Portfolio</h1>
+        <a href="https://wa.me/37126106616" target="_blank" rel="noopener" class="contact-link">💬 Get in Touch</a>
+    </div>
+
+    <!-- Nav tabs -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-section="fashion">Fashion & Style</button>
+        <button class="nav-tab" data-section="portraits">AI Portrait Sessions</button>
+        <button class="nav-tab" data-section="hybrid">Hybrid Worlds</button>
+        <button class="nav-tab" data-section="client">Client Work</button>
+        <button class="nav-tab" data-section="space">Space Visualization</button>
+        <button class="nav-tab" data-section="cinematic">Cinematic</button>
+        <button class="nav-tab" data-section="music">Music Video</button>
+    </div>
+
+    <!-- ====== FASHION & STYLE ====== -->
+    <div class="section active" id="fashion">
+        <p class="section-desc">Imaginary AI campaigns &amp; commercial fashion projects</p>
+        <div class="grid-vertical">
+
+            <div class="video-card" data-url="https://youtube.com/shorts/er7Hc-3_k9Q">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/er7Hc-3_k9Q/maxresdefault.jpg" alt="Fashion Reel" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">From Image To Film</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=72d7ML7B-Sk">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/72d7ML7B-Sk/maxresdefault.jpg" alt="Zara Try-On" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Zara Try-On</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=hdgzK81TENM">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/hdgzK81TENM/maxresdefault.jpg" alt="Dreams Come True" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Dreams Come True</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=SiD5s5jlHfs">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/SiD5s5jlHfs/maxresdefault.jpg" alt="Stunning Headpieces" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                    <span class="badge badge-client">Client Work</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Stunning Headpieces · @volotovskaya_elena</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=ZcnVf2I3hjU">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/ZcnVf2I3hjU/maxresdefault.jpg" alt="SELA Virtual Try-On" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">SELA Virtual Try-On</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=_M-iROZCfvI">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/_M-iROZCfvI/maxresdefault.jpg" alt="Atlas Shrugged · DEACtOr" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                    <span class="badge badge-client">Client Work</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Atlas Shrugged · AI Campaign for DEACtOr</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=aBqTdrwx3FY">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/aBqTdrwx3FY/maxresdefault.jpg" alt="12storeez Swimsuit" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">12storeez Swimsuit</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=E7chRx44aBM">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/E7chRx44aBM/maxresdefault.jpg" alt="Rouje Campaign" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Rouje</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=qfWMkP8nfNg">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg" alt="Le Love Lipstick" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                    <span class="badge badge-award">🏆 3rd Place · KlingAI</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Le Love Lipstick · KlingAI Competition Entry</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=qywut7l-D-Y">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/qywut7l-D-Y/maxresdefault.jpg" alt="Givenchy Campaign" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Givenchy</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== AI PORTRAIT SESSIONS ====== -->
+    <div class="section" id="portraits">
+        <p class="section-desc">AI photo sessions brought to life through animation</p>
+        <div class="grid-vertical">
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=sitdwXD_BZ8">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/sitdwXD_BZ8/maxresdefault.jpg" alt="Panther Eyes · Alina" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Let's Look Into the Panther's Eyes · Alina</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=PuwwVvycZMY">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/PuwwVvycZMY/maxresdefault.jpg" alt="Pink Flamingo · Alina" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">AI Photoshoot with a Pink Flamingo · Alina</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=DOJT6cJQc18">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/DOJT6cJQc18/maxresdefault.jpg" alt="Harry Potter Mood · Anna" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Step Into Magic · Harry Potter Mood · Anna</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== HYBRID WORLDS ====== -->
+    <div class="section" id="hybrid">
+        <p class="section-desc">Real footage blending into AI-generated environments</p>
+        <div class="grid-vertical">
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=b1qm2H9UZl8">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/b1qm2H9UZl8/maxresdefault.jpg" alt="Lusine Space Café" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Inspired by a Moment · @lusinespace</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=m-PSq9AZHpc">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/m-PSq9AZHpc/maxresdefault.jpg" alt="Cartier" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Original Meets Imagined · Cartier</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=_cenqUA2Ru0">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/_cenqUA2Ru0/maxresdefault.jpg" alt="Boost Juice" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">A Drink from @myboostjuice</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== CLIENT WORK ====== -->
+    <div class="section" id="client">
+        <p class="section-desc">Commercial AI video production</p>
+        <div class="grid-vertical">
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=kq-E46J77x4">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/kq-E46J77x4/maxresdefault.jpg" alt="Hockey Club Ogres Lāči" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                    <span class="badge badge-client">Client Work</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Promo Video · Youth Hockey Club "Ogres Lāči"</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=pqFWvR4asYs">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/pqFWvR4asYs/maxresdefault.jpg" alt="LED Car Lights" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                    <span class="badge badge-client">Client Work</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">LED Car Lights · AI Product Video for Marketplace</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== SPACE VISUALIZATION ====== -->
+    <div class="section" id="space">
+        <p class="section-desc">From architectural sketch to fully visualized interior</p>
+        <div class="grid-horizontal">
+
+            <div class="video-card" data-url="https://youtu.be/SDkRdMygLKo">
+                <div class="thumb thumb-169">
+                    <img src="https://img.youtube.com/vi/SDkRdMygLKo/maxresdefault.jpg" alt="From Sketch to Reality" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">From Sketch to Reality · Room Tour Visualization</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== CINEMATIC ====== -->
+    <div class="section" id="cinematic">
+        <p class="section-desc">Cinematic AI storytelling · mixed formats</p>
+
+        <!-- Two vertical 9:16 -->
+        <div class="grid-vertical" style="margin-bottom: 16px;">
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=3wQ5gtOOWI8">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/3wQ5gtOOWI8/maxresdefault.jpg" alt="Memory Pawnshop" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Memory Pawnshop</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://www.youtube.com/watch?v=bhMFl1XPOmo">
+                <div class="thumb thumb-916">
+                    <img src="https://img.youtube.com/vi/bhMFl1XPOmo/maxresdefault.jpg" alt="Still Choosing Each Other" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Still Choosing Each Other</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Three horizontal 16:9 -->
+        <div class="grid-horizontal">
+
+            <div class="video-card" data-url="https://youtu.be/oiZpYye79jU">
+                <div class="thumb thumb-169">
+                    <img src="https://img.youtube.com/vi/oiZpYye79jU/maxresdefault.jpg" alt="Friday the 13th" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Friday the 13th · The Night Before Love</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://youtu.be/s4X3PODCUzo">
+                <div class="thumb thumb-169">
+                    <img src="https://img.youtube.com/vi/s4X3PODCUzo/hqdefault.jpg" alt="In My Head" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">In My Head</div>
+                </div>
+            </div>
+
+            <div class="video-card" data-url="https://youtu.be/ENBD63SFH-w">
+                <div class="thumb thumb-169">
+                    <img src="https://img.youtube.com/vi/ENBD63SFH-w/maxresdefault.jpg" alt="It's Just a Day" loading="lazy">
+                    <div class="play-overlay"><div class="play-btn"></div></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">It's Just a Day</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== MUSIC VIDEO ====== -->
+    <div class="section" id="music">
+        <p class="section-desc">Original song written to my own poetry · Music &amp; vocals generated with Suno · Available on streaming platforms as <strong>NataliaLe Music</strong></p>
+        <div class="feature-card">
+            <div class="thumb thumb-169" style="cursor:pointer;" onclick="window.open('https://youtu.be/8bPLmNCfl8M','_blank','noopener')">
+                <img src="https://img.youtube.com/vi/8bPLmNCfl8M/maxresdefault.jpg" alt="Не Отдаляйся" loading="lazy">
+                <div class="play-overlay" style="opacity:1; background:rgba(43,34,54,0.2);">
+                    <div class="play-btn"></div>
+                </div>
+            </div>
+            <div class="feature-info">
+                <h3>Не Отдаляйся</h3>
+                <p>Original song · Lyrics &amp; concept by Natalia</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ====== MODAL LIGHTBOX ====== -->
+<div id="videoModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-topbar">
+            <a id="modalYTBtn" href="#" target="_blank" rel="noopener" class="modal-yt-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                Watch on YouTube
+            </a>
+            <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-video">
+            <iframe id="modalIframe" src="" allowfullscreen allow="autoplay; encrypted-media" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tab switching
+const tabs = document.querySelectorAll('.nav-tab');
+const sections = document.querySelectorAll('.section');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        const target = document.getElementById(tab.dataset.section);
+        if (target) target.classList.add('active');
+    });
+});
+
+// Modal lightbox
+const modal       = document.getElementById('videoModal');
+const modalIframe = document.getElementById('modalIframe');
+const modalYTBtn  = document.getElementById('modalYTBtn');
+const modalClose  = document.getElementById('modalClose');
+
+function openModal(videoId, youtubeUrl) {
+    modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    modalYTBtn.href = youtubeUrl;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    modal.classList.remove('active');
+    modalIframe.src = '';
+    document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// Extract YouTube video ID from various URL formats
+function extractVideoId(url) {
+    const patterns = [
+        /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
+        /youtu\.be\/([a-zA-Z0-9_-]+)/,
+        /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
+    ];
+    for (const p of patterns) {
+        const m = url.match(p);
+        if (m) return m[1];
+    }
+    return null;
+}
+
+const isMobile = () => window.innerWidth < 769;
+
+document.querySelectorAll('.video-card[data-url]').forEach(card => {
+    card.addEventListener('click', () => {
+        const url = card.dataset.url;
+        const videoId = extractVideoId(url);
+        if (isMobile()) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        } else if (videoId) {
+            openModal(videoId, url);
+        } else {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    });
+});
+
+// Feature card (Music Video)
+const featureThumb = document.querySelector('.feature-card .thumb');
+if (featureThumb) {
+    featureThumb.style.cursor = 'pointer';
+    featureThumb.removeAttribute('onclick');
+    featureThumb.addEventListener('click', () => {
+        if (isMobile()) {
+            window.open('https://youtu.be/8bPLmNCfl8M', '_blank', 'noopener,noreferrer');
+        } else {
+            openModal('8bPLmNCfl8M', 'https://youtu.be/8bPLmNCfl8M');
+        }
+    });
+}
+
+// Mouse shimmer
+(() => {
+    if (window.innerWidth < 769) return;
+    const root = document.documentElement;
+    let target = 0, current = 0;
+    window.addEventListener('mousemove', (e) => {
+        target = ((e.clientX / window.innerWidth) - 0.5) * 20;
+    }, { passive: true });
+    (function animate() {
+        current += (target - current) * 0.05;
+        root.style.setProperty('--a', current.toFixed(2) + 'deg');
+        requestAnimationFrame(animate);
+    })();
+})();
+</script>
+</body>
+</html>
