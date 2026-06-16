@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalia Le — AI Content Creator &amp; Visual Storyteller</title>
+  <meta name="description" content="AI Content Creator &amp; Visual Storyteller based in Riga. Script to final cut — AI video, generative visuals, music, and automation.">
+
+  <!-- Open Graph — controls how this link looks in Telegram, LinkedIn, etc. -->
+  <meta property="og:title"       content="Natalia Le — AI Content Creator &amp; Visual Storyteller">
+  <meta property="og:description" content="From script to final cut — AI-powered visual content for brands, startups, and digital platforms.">
+  <meta property="og:image"       content="https://img.youtube.com/vi/ENBD63SFH-w/maxresdefault.jpg">
+  <meta property="og:url"         content="https://portfolio-v2-nataliale.vercel.app/">
+  <meta property="og:type"        content="website">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <!-- Favicon: NL monogram in accent purple -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23121014'/><text x='16' y='22' font-family='monospace' font-size='13' font-weight='bold' fill='%238B5CF6' text-anchor='middle'>NL</text></svg>">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 580px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 var(--pad-x) clamp(4rem, 9vw, 7rem);
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(18,16,20,0.2)  0%,
+        rgba(18,16,20,0.55) 50%,
+        rgba(18,16,20,0.96) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+    }
+
+    .hero-eyebrow { display: block; margin-bottom: 1.5rem; }
+
+    .hero-title { color: var(--text); margin-bottom: 1.25rem; }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      color: var(--text-dim);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.65;
+    }
+
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.875rem; }
+
+    /* ── Selected work grid ───────────────────────────── */
+    .sel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--bg);
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    /* "View all" cell */
+    .sel-all {
+      background: var(--bg-raised);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+      min-height: 200px;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .sel-all:hover { background: rgba(139,92,246,0.07); }
+    .sel-all .mono { transition: color 0.2s; }
+    .sel-all:hover .mono { color: var(--accent); }
+    .sel-arrow {
+      font-size: 1.8rem;
+      color: var(--text-dim);
+      transition: transform 0.3s ease, color 0.2s;
+    }
+    .sel-all:hover .sel-arrow { transform: translateX(8px); color: var(--accent); }
+
+    .card-body { padding: 1rem 1.25rem 1.5rem; }
+    .card-title { margin-bottom: 0.35rem; }
+    .card-meta  { display: block; margin-bottom: 0.4rem; }
+    .card-result {
+      font-family: var(--f-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-lt);
+    }
+
+    /* Override card aspect ratio for selected work — 3:4 suits vertical content */
+    /* Selected work — standard 16:9 matches YouTube thumbnail format */
+    .sel-grid .card-media { aspect-ratio: 16 / 9; }
+
+    /* ── Services ─────────────────────────────────────── */
+    .services-lead {
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: var(--text);
+      max-width: 600px;
+      margin-bottom: 2.25rem;
+    }
+
+    .services-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .svc {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .svc:hover { color: var(--text); }
+    .svc-sep { padding: 0 1rem; color: var(--divider); font-size: 1.4rem; line-height: 1; }
+
+    /* ── Trust strip ──────────────────────────────────── */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--divider);
+    }
+    .trust-item {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .trust-val {
+      font-family: var(--f-display);
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .sel-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .sel-grid   { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: 1fr; }
+      .services-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .svc-sep    { display: none; }
+      .hero-ctas .btn { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ Navigation ═══════════════════════════════════════════ -->
+<nav class="nav" id="main-nav">
+  <a href="index.html" class="nav-logo">Natalia Le</a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ Hero ════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Introduction">
+
+  <!--
+    ┌─ SHOWREEL VIDEO ─────────────────────────────────────────┐
+    │ 1. Export showreel as:  media/showreel.mp4               │
+    │    Settings: h.264 · 1280px wide · no audio · ~4–6 MB   │
+    │ 2. Create a /media folder in this repo                   │
+    │ 3. Uncomment the <source> line below                     │
+    │ Until then, the poster image (YouTube thumbnail) shows.  │
+    └──────────────────────────────────────────────────────────┘
+  -->
+  <video class="hero-video" autoplay muted loop playsinline
+    poster="https://img.youtube.com/vi/ENBD63SFH-w/maxresdefault.jpg">
+    <source src="showreel.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <span class="mono hero-eyebrow">Natalia Le · Riga, Latvia</span>
+    <h1 class="hero-title">AI Content Creator<br>&amp; Visual Storyteller</h1>
+    <p class="hero-sub">From script to final cut — AI-powered video, visuals,<br>
+    and sound for brands, startups, and digital platforms.</p>
+    <div class="hero-ctas">
+      <a href="work.html" class="btn btn-primary">Watch work</a>
+      <a href="about.html" class="btn btn-ghost">About me</a>
+    </div>
+  </div>
+
+</section>
+
+<hr class="rule">
+
+<!-- ═══ Selected Work ════════════════════════════════════════ -->
+<div style="max-width: var(--max-w); margin: 0 auto; padding: var(--pad-y) var(--pad-x) clamp(3rem,6vw,5rem);">
+
+  <span class="section-tag reveal">Selected work</span>
+
+  <div class="sel-grid">
+
+    <article class="card reveal" style="--d:.05s" data-id="kq-E46J77x4" data-format="horizontal">
+      <div class="card-media">
+        <img src="https://img.youtube.com/vi/kq-E46J77x4/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/kq-E46J77x4/hqdefault.jpg'"
+             alt="Hockey Club Lāči promo video" loading="lazy">
+        <div class="card-play">▶</div>
+        <span class="badge badge-client">Client</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Hockey Club "Lāči"</h3>
+        <span class="mono card-meta">Client Work · KlingAI</span>
+        <p class="card-result">3× more views than client's average post</p>
+      </div>
+    </article>
+
+    <article class="card reveal" style="--d:.12s" data-id="pqFWvR4asYs" data-format="horizontal">
+      <div class="card-media">
+        <img src="https://img.youtube.com/vi/pqFWvR4asYs/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/pqFWvR4asYs/hqdefault.jpg'"
+             alt="LED Car Lights AI product video" loading="lazy">
+        <div class="card-play">▶</div>
+        <span class="badge badge-client">Client</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">LED Car Lights</h3>
+        <span class="mono card-meta">Client Work · Flux LoRA</span>
+        <p class="card-result">Custom LoRA trained on KIA vehicles</p>
+      </div>
+    </article>
+
+    <article class="card reveal" style="--d:.19s" data-id="qfWMkP8nfNg">
+      <div class="card-media">
+        <img src="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/qfWMkP8nfNg/hqdefault.jpg'"
+             alt="Le Love Lipstick KlingAI competition" loading="lazy">
+        <div class="card-play">▶</div>
+        <span class="badge badge-award">Award</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Le Love Lipstick</h3>
+        <span class="mono card-meta">KlingAI Ad Master 2025 · 3rd Place</span>
+        <p class="card-result">Prize: 6-month Pro Plan + 3,500 credits</p>
+      </div>
+    </article>
+
+    <article class="card reveal" style="--d:.05s" data-id="MYfHnQLssSg">
+      <div class="card-media">
+        <img src="https://img.youtube.com/vi/MYfHnQLssSg/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/MYfHnQLssSg/hqdefault.jpg'"
+             alt="Dress by Belanovich" loading="lazy">
+        <div class="card-play">▶</div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Dress by Belanovich</h3>
+        <span class="mono card-meta">Fashion · KlingAI</span>
+      </div>
+    </article>
+
+    <article class="card reveal" style="--d:.12s" data-id="3wQ5gtOOWI8">
+      <div class="card-media">
+        <img src="https://img.youtube.com/vi/3wQ5gtOOWI8/maxresdefault.jpg"
+             onerror="this.src='https://img.youtube.com/vi/3wQ5gtOOWI8/hqdefault.jpg'"
+             alt="Memory Pawnshop cinematic" loading="lazy">
+        <div class="card-play">▶</div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Memory Pawnshop</h3>
+        <span class="mono card-meta">Cinematic · AI Storytelling</span>
+      </div>
+    </article>
+
+    <a href="work.html" class="sel-all reveal" style="--d:.19s" aria-label="View all work">
+      <span class="mono">View all work</span>
+      <span class="sel-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ Services ════════════════════════════════════════════ -->
+<div class="section section-sm">
+  <span class="section-tag reveal">What I do</span>
+  <p class="services-lead reveal">AI tools, human vision — from the first frame to the final cut.</p>
+  <div class="services-row reveal" style="--d:.1s">
+    <span class="svc">AI Video</span>
+    <span class="svc-sep">·</span>
+    <span class="svc">Image &amp; Characters</span>
+    <span class="svc-sep">·</span>
+    <span class="svc">Music &amp; Audio</span>
+    <span class="svc-sep">·</span>
+    <span class="svc">Automation</span>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ Trust Strip ══════════════════════════════════════════ -->
+<div class="section section-sm">
+  <div class="trust-grid reveal">
+    <div class="trust-item">
+      <span class="mono">Award</span>
+      <span class="trust-val">3rd Place · KlingAI Ad Master 2025</span>
+    </div>
+    <div class="trust-item">
+      <span class="mono">Background</span>
+      <span class="trust-val">12 Years in HR · Ex-Accenture Baltics</span>
+    </div>
+    <div class="trust-item">
+      <span class="mono">World</span>
+      <span class="trust-val">50 Countries · Based in Riga</span>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ Footer / Contact ══════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer-top">
+    <div>
+      <span class="footer-tag">Have a project in mind?</span>
+      <p class="footer-name">Natalia Le</p>
+    </div>
+    <div class="footer-btns">
+      <a href="https://www.linkedin.com/in/natalja-levaskovica" class="btn btn-accent" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/NataliLe" class="btn btn-accent" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/37126106616" class="btn btn-accent" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <ul class="footer-links">
+      <li><a href="https://www.tiktok.com/@nataliale.ai.art" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://www.instagram.com/nataliale_aiart" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.threads.com/@nataliale_notes" target="_blank" rel="noopener">Threads</a></li>
+      <li><a href="https://t.me/AI_Test_Tube" target="_blank" rel="noopener">Telegram Channel</a></li>
+      <li><a href="https://github.com/natalialeaiart" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <span class="footer-locale">Riga, Latvia · EN · LV · RU</span>
+  </div>
+</footer>
+
+<!-- ═══ Modal (video player) ═════════════════════════════════ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">✕ Close</button>
+    <div class="modal-frame">
+      <iframe id="modal-iframe" src="" allowfullscreen title="Video player"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Nav: add glass bg when page is scrolled
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Modal
+  const modal      = document.getElementById('modal');
+  const iframe     = document.getElementById('modal-iframe');
+  const closeBtn   = document.getElementById('modal-close');
+
+  function openModal(id) {
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    iframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.card[data-id]').forEach(c =>
+    c.addEventListener('click', () => openModal(c.dataset.id))
+  );
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

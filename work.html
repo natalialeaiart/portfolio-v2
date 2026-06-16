@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Natalia Le · AI Content Creator</title>
+  <meta name="description" content="AI video portfolio of Natalia Le — client work, fashion, cinematic, hybrid, spaces, and music videos. 25+ projects.">
+
+  <meta property="og:title"       content="Work — Natalia Le · AI Content Creator">
+  <meta property="og:description" content="AI-generated video, fashion campaigns, cinematic storytelling, and client work by Natalia Le.">
+  <meta property="og:image"       content="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg">
+  <meta property="og:url"         content="https://portfolio-v2-nataliale.vercel.app/work.html">
+  <meta property="og:type"        content="website">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23121014'/><text x='16' y='22' font-family='monospace' font-size='13' font-weight='bold' fill='%238B5CF6' text-anchor='middle'>NL</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Page header ──────────────────────────────────── */
+    .work-header {
+      padding-top: calc(var(--nav-h) + clamp(1.5rem, 3vw, 2.5rem));
+      padding-bottom: clamp(1rem, 2vw, 1.5rem);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--pad-x);
+      padding-right: var(--pad-x);
+    }
+
+    /* ── Featured cases ───────────────────────────────── */
+    .cases-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x) clamp(3rem, 6vw, 5rem);
+    }
+
+    .case {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+      border-top: 1px solid var(--divider);
+      align-items: start;
+      cursor: pointer;
+    }
+    .case:hover .case-thumb-img { transform: scale(1.03); filter: brightness(0.78); }
+    .case:hover .case-play { opacity: 1; }
+
+    .case-thumb {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--bg-raised);
+      position: relative;
+      border-radius: 2px;
+    }
+    .case-thumb-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+    .case-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--text);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .case-body {}
+
+    .case-category {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .case-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .case-process {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .proc-step {
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .proc-arrow { color: var(--divider); font-size: 0.75rem; margin: 0 0.25rem; }
+
+    .case-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 55ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-result {
+      display: block;
+      font-family: var(--f-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-lt);
+      margin-bottom: 1rem;
+    }
+
+    .case-tools {
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ── Filter tabs ──────────────────────────────────── */
+    .filter-bar {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .filter-list {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .filter-btn {
+      font-family: var(--f-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 1rem 1.25rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      position: relative;
+      white-space: nowrap;
+    }
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .filter-btn:hover        { color: var(--text); }
+    .filter-btn.active       { color: var(--text); }
+    .filter-btn.active::after { width: 100%; }
+
+    /* ── Work grid ────────────────────────────────────── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      margin-top: 1px;
+      align-items: start;
+    }
+
+    .work-item {
+      background: var(--bg);
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Transition for filter hide/show */
+    .work-item.hidden {
+      display: none;
+    }
+
+    /* Standard 16:9 — matches all YouTube thumbnails */
+    .work-thumb {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--bg-raised);
+      position: relative;
+    }
+    .work-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+    .work-item:hover .work-thumb img {
+      transform: scale(1.04);
+      filter: brightness(0.72);
+    }
+    .work-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--text);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .work-item:hover .work-play { opacity: 1; }
+
+    .work-info { padding: 0.875rem 1.1rem 1.25rem; }
+    .work-title { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.3rem; }
+    .work-cat   { display: block; }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .case { grid-template-columns: 1fr; }
+      .case-thumb { max-width: 560px; }
+    }
+    @media (max-width: 768px) {
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ Navigation ═══════════════════════════════════════════ -->
+<nav class="nav" id="main-nav">
+  <a href="index.html" class="nav-logo">Natalia Le</a>
+  <ul class="nav-links">
+    <li><a href="work.html" class="active">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ Page Header ══════════════════════════════════════════ -->
+<header class="work-header">
+  <span class="section-tag reveal">Portfolio</span>
+  <h1 class="reveal" style="--d:.06s">Work</h1>
+</header>
+
+<!-- ═══ Featured Cases ═══════════════════════════════════════ -->
+<div class="cases-wrap">
+
+  <!-- Case 1: Lāči -->
+  <article class="case reveal" data-id="kq-E46J77x4" style="--d:.1s">
+    <div class="case-thumb">
+      <img class="case-thumb-img"
+           src="https://img.youtube.com/vi/kq-E46J77x4/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/kq-E46J77x4/hqdefault.jpg'"
+           alt="Hockey Club Lāči promo video" loading="lazy">
+      <div class="case-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="case-body">
+      <div class="case-category">
+        <span class="mono">Client Work</span>
+      </div>
+      <h2 class="case-title">Promo Video — Youth Hockey Club "Lāči"</h2>
+      <div class="case-process">
+        <span class="proc-step">Script</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Characters</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Face-swap</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Animation</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Edit</span>
+      </div>
+      <p class="case-desc">AI-generated promo featuring the club's bear mascot and two real coaches
+      (face-swap integration). Developed script, storyboard, custom characters, and final edit.
+      Published on the club's official Facebook and Instagram.</p>
+      <span class="case-result">Result: 3× more views than average on the client's social pages</span>
+      <span class="case-tools">KlingAI · PicsArt · Filmora</span>
+    </div>
+  </article>
+
+  <!-- Case 2: LED Car Lights -->
+  <article class="case reveal" style="--d:.05s" data-id="pqFWvR4asYs">
+    <div class="case-thumb">
+      <img class="case-thumb-img"
+           src="https://img.youtube.com/vi/pqFWvR4asYs/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/pqFWvR4asYs/hqdefault.jpg'"
+           alt="LED Car Lights AI product video" loading="lazy">
+      <div class="case-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="case-body">
+      <div class="case-category">
+        <span class="mono">Client Work</span>
+      </div>
+      <h2 class="case-title">LED Car Lights — AI Product Video for Marketplace</h2>
+      <div class="case-process">
+        <span class="proc-step">Script</span><span class="proc-arrow">→</span>
+        <span class="proc-step">LoRA Training</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Generation</span><span class="proc-arrow">→</span>
+        <span class="proc-step">AI Audio</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Edit</span>
+      </div>
+      <p class="case-desc">Trained a custom Flux LoRA model on KIA vehicles. Generated visuals in
+      MidJourney &amp; Flux, integrated the actual LED headlight product into scenes. Composed AI
+      ambient audio and background music. Applied a "tiny workers" visual style for a creative product
+      scale effect. Detailed script and closing slogan written by me, both approved by the client.</p>
+      <span class="case-result">Custom LoRA trained from scratch · Executed within client's creative brief</span>
+      <span class="case-tools">Flux LoRA · MidJourney · KlingAI · PicsArt · MMAudio · Suno · Filmora</span>
+    </div>
+  </article>
+
+  <!-- Case 3: Le Love Lipstick -->
+  <article class="case reveal" style="--d:.05s" data-id="qfWMkP8nfNg">
+    <div class="case-thumb">
+      <img class="case-thumb-img"
+           src="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/qfWMkP8nfNg/hqdefault.jpg'"
+           alt="Le Love Lipstick KlingAI competition" loading="lazy">
+      <div class="case-play">▶</div>
+      <span class="badge badge-award">Award</span>
+    </div>
+    <div class="case-body">
+      <div class="case-category">
+        <span class="mono">KlingAI Ad Master · March 2025</span>
+      </div>
+      <h2 class="case-title">Le Love Lipstick — KlingAI Competition Entry</h2>
+      <div class="case-process">
+        <span class="proc-step">Concept</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Visual Development</span><span class="proc-arrow">→</span>
+        <span class="proc-step">KlingAI Animation</span><span class="proc-arrow">→</span>
+        <span class="proc-step">Submission</span>
+      </div>
+      <p class="case-desc">Competition entry for the KlingAI Ad Master Dual Challenges — an international
+      AI video competition. The video earned 3rd Place (Popularity Award) among hundreds of entries
+      from creators worldwide.</p>
+      <span class="case-result">3rd Place · Popularity Award · KlingAI Ad Master Dual Challenges</span>
+      <span class="case-tools">KlingAI · MidJourney</span>
+    </div>
+  </article>
+
+</div>
+
+<hr class="rule">
+
+<!-- ═══ Filter Tabs ══════════════════════════════════════════ -->
+<div class="filter-bar" role="navigation" aria-label="Filter portfolio by category">
+  <ul class="filter-list" id="filter-list">
+    <li><button class="filter-btn active" data-filter="all">All</button></li>
+    <li><button class="filter-btn" data-filter="client">Client</button></li>
+    <li><button class="filter-btn" data-filter="fashion">Fashion</button></li>
+    <li><button class="filter-btn" data-filter="portrait">Portrait</button></li>
+    <li><button class="filter-btn" data-filter="hybrid">Hybrid</button></li>
+    <li><button class="filter-btn" data-filter="cinematic">Cinematic</button></li>
+    <li><button class="filter-btn" data-filter="spaces">Spaces</button></li>
+    <li><button class="filter-btn" data-filter="music">Music</button></li>
+  </ul>
+</div>
+
+<!-- ═══ Work Grid ════════════════════════════════════════════ -->
+<!--
+  data-categories: space-separated list.
+  Edit these freely — they control which filter tab shows each card.
+  Options: client · fashion · portrait · hybrid · cinematic · spaces · music
+-->
+<div class="work-grid" id="work-grid">
+
+  <!-- Fashion & Style -->
+  <div class="work-item" data-categories="fashion" data-id="er7Hc-3_k9Q">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/er7Hc-3_k9Q/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/er7Hc-3_k9Q/hqdefault.jpg'"
+           alt="Fashion Reel" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Fashion Reel</p>
+      <span class="mono work-cat">Fashion · KlingAI · MidJourney</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="MYfHnQLssSg">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/MYfHnQLssSg/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/MYfHnQLssSg/hqdefault.jpg'"
+           alt="Dress by Belanovich" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Dress by Belanovich</p>
+      <span class="mono work-cat">Fashion · KlingAI</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="72d7ML7B-Sk">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/72d7ML7B-Sk/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/72d7ML7B-Sk/hqdefault.jpg'"
+           alt="Zara Try-On" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Zara Try-On</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="hdgzK81TENM">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/hdgzK81TENM/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/hdgzK81TENM/hqdefault.jpg'"
+           alt="Dreams Come True" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Dreams Come True</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion client" data-id="SiD5s5jlHfs">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/SiD5s5jlHfs/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/SiD5s5jlHfs/hqdefault.jpg'"
+           alt="Stunning Headpieces client work" loading="lazy">
+      <div class="work-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Stunning Headpieces · @volotovskaya_elena</p>
+      <span class="mono work-cat">Client Work · Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="ZcnVf2I3hjU">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/ZcnVf2I3hjU/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/ZcnVf2I3hjU/hqdefault.jpg'"
+           alt="SELA Virtual Try-On" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">SELA Virtual Try-On</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion client" data-id="_M-iROZCfvI">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/_M-iROZCfvI/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/_M-iROZCfvI/hqdefault.jpg'"
+           alt="Atlas Shrugged DEACtOr campaign" loading="lazy">
+      <div class="work-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Atlas Shrugged · AI Campaign for DEACtOr</p>
+      <span class="mono work-cat">Client Work · Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="aBqTdrwx3FY">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/aBqTdrwx3FY/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/aBqTdrwx3FY/hqdefault.jpg'"
+           alt="12storeez Swimsuit" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">12storeez Swimsuit</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="E7chRx44aBM">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/E7chRx44aBM/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/E7chRx44aBM/hqdefault.jpg'"
+           alt="Rouje campaign" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Rouje</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="qfWMkP8nfNg">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/qfWMkP8nfNg/hqdefault.jpg'"
+           alt="Le Love Lipstick KlingAI" loading="lazy">
+      <div class="work-play">▶</div>
+      <span class="badge badge-award">Award</span>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Le Love Lipstick · KlingAI Competition</p>
+      <span class="mono work-cat">Fashion · 3rd Place Ad Master 2025</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="fashion" data-id="qywut7l-D-Y">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/qywut7l-D-Y/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/qywut7l-D-Y/hqdefault.jpg'"
+           alt="Givenchy campaign" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Givenchy</p>
+      <span class="mono work-cat">Fashion</span>
+    </div>
+  </div>
+
+  <!-- AI Portrait Sessions -->
+  <div class="work-item" data-categories="portrait" data-id="sitdwXD_BZ8">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/sitdwXD_BZ8/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/sitdwXD_BZ8/hqdefault.jpg'"
+           alt="Panther Eyes Alina portrait" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Let's Look Into the Panther's Eyes · Alina</p>
+      <span class="mono work-cat">AI Portrait</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="portrait" data-id="PuwwVvycZMY">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/PuwwVvycZMY/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/PuwwVvycZMY/hqdefault.jpg'"
+           alt="Pink Flamingo Alina portrait" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">AI Photoshoot with a Pink Flamingo · Alina</p>
+      <span class="mono work-cat">AI Portrait</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="portrait" data-id="DOJT6cJQc18">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/DOJT6cJQc18/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/DOJT6cJQc18/hqdefault.jpg'"
+           alt="Harry Potter Mood Anna portrait" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Step Into Magic · Harry Potter Mood · Anna</p>
+      <span class="mono work-cat">AI Portrait</span>
+    </div>
+  </div>
+
+  <!-- Hybrid Worlds -->
+  <div class="work-item" data-categories="hybrid" data-id="b1qm2H9UZl8">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/b1qm2H9UZl8/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/b1qm2H9UZl8/hqdefault.jpg'"
+           alt="Lusine Space Café hybrid" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Inspired by a Moment · @lusinespace</p>
+      <span class="mono work-cat">Hybrid Worlds</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="hybrid" data-id="m-PSq9AZHpc">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/m-PSq9AZHpc/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/m-PSq9AZHpc/hqdefault.jpg'"
+           alt="Original Meets Imagined Cartier" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Original Meets Imagined · Cartier</p>
+      <span class="mono work-cat">Hybrid Worlds</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="hybrid" data-id="_cenqUA2Ru0">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/_cenqUA2Ru0/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/_cenqUA2Ru0/hqdefault.jpg'"
+           alt="A Drink from Boost Juice" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">A Drink from @myboostjuice</p>
+      <span class="mono work-cat">Hybrid Worlds</span>
+    </div>
+  </div>
+
+  <!-- Client Work -->
+  <div class="work-item" data-categories="client" data-id="kq-E46J77x4" data-format="horizontal">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/kq-E46J77x4/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/kq-E46J77x4/hqdefault.jpg'"
+           alt="Hockey Club Lāči" loading="lazy">
+      <div class="work-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Promo Video · Youth Hockey Club "Ogres Lāči"</p>
+      <span class="mono work-cat">Client Work</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="client" data-id="pqFWvR4asYs" data-format="horizontal">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/pqFWvR4asYs/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/pqFWvR4asYs/hqdefault.jpg'"
+           alt="LED Car Lights product video" loading="lazy">
+      <div class="work-play">▶</div>
+      <span class="badge badge-client">Client</span>
+    </div>
+    <div class="work-info">
+      <p class="work-title">LED Car Lights · AI Product Video</p>
+      <span class="mono work-cat">Client Work</span>
+    </div>
+  </div>
+
+  <!-- Space Visualization -->
+  <div class="work-item" data-categories="spaces" data-id="SDkRdMygLKo" data-format="horizontal">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/SDkRdMygLKo/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/SDkRdMygLKo/hqdefault.jpg'"
+           alt="Room Tour Visualization from sketch" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">From Sketch to Reality · Room Tour Visualization</p>
+      <span class="mono work-cat">Space Visualization</span>
+    </div>
+  </div>
+
+  <!-- Cinematic -->
+  <div class="work-item" data-categories="cinematic" data-id="3wQ5gtOOWI8">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/3wQ5gtOOWI8/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/3wQ5gtOOWI8/hqdefault.jpg'"
+           alt="Memory Pawnshop" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Memory Pawnshop</p>
+      <span class="mono work-cat">Cinematic</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="cinematic" data-id="bhMFl1XPOmo">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/bhMFl1XPOmo/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/bhMFl1XPOmo/hqdefault.jpg'"
+           alt="Still Choosing Each Other" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Still Choosing Each Other</p>
+      <span class="mono work-cat">Cinematic</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="cinematic" data-id="oiZpYye79jU">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/oiZpYye79jU/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/oiZpYye79jU/hqdefault.jpg'"
+           alt="Friday the 13th cinematic" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Friday the 13th · The Night Before Love</p>
+      <span class="mono work-cat">Cinematic</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="cinematic" data-id="s4X3PODCUzo">
+    <div class="work-thumb">
+      <!-- This video only has hqdefault, so we skip the onerror fallback -->
+      <img src="https://img.youtube.com/vi/s4X3PODCUzo/hqdefault.jpg"
+           alt="In My Head" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">In My Head</p>
+      <span class="mono work-cat">Cinematic</span>
+    </div>
+  </div>
+
+  <div class="work-item" data-categories="cinematic music" data-id="ENBD63SFH-w">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/ENBD63SFH-w/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/ENBD63SFH-w/hqdefault.jpg'"
+           alt="It's Just a Day — NataliaLe Music" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">It's Just a Day</p>
+      <span class="mono work-cat">Cinematic · NataliaLe Music</span>
+    </div>
+  </div>
+
+  <!-- Music -->
+  <div class="work-item" data-categories="music" data-id="8bPLmNCfl8M">
+    <div class="work-thumb">
+      <img src="https://img.youtube.com/vi/8bPLmNCfl8M/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/8bPLmNCfl8M/hqdefault.jpg'"
+           alt="Не Отдаляйся — NataliaLe Music" loading="lazy">
+      <div class="work-play">▶</div>
+    </div>
+    <div class="work-info">
+      <p class="work-title">Не Отдаляйся</p>
+      <span class="mono work-cat">Music · NataliaLe Music</span>
+    </div>
+  </div>
+
+</div><!-- end .work-grid -->
+
+<hr class="rule" style="margin-top:1px;">
+
+<!-- ═══ Footer ═══════════════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer-top">
+    <div>
+      <span class="footer-tag">Have a project in mind?</span>
+      <p class="footer-name">Natalia Le</p>
+    </div>
+    <div class="footer-btns">
+      <a href="https://www.linkedin.com/in/natalja-levaskovica" class="btn btn-accent" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/NataliLe" class="btn btn-accent" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/37126106616" class="btn btn-accent" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <ul class="footer-links">
+      <li><a href="https://www.tiktok.com/@nataliale.ai.art" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://www.instagram.com/nataliale_aiart" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.threads.com/@nataliale_notes" target="_blank" rel="noopener">Threads</a></li>
+      <li><a href="https://t.me/AI_Test_Tube" target="_blank" rel="noopener">Telegram Channel</a></li>
+      <li><a href="https://github.com/natalialeaiart" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <span class="footer-locale">Riga, Latvia · EN · LV · RU</span>
+  </div>
+</footer>
+
+<!-- ═══ Modal ════════════════════════════════════════════════ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">✕ Close</button>
+    <div class="modal-frame">
+      <iframe id="modal-iframe" src="" allowfullscreen title="Video player"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Filter tabs
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const workItems   = document.querySelectorAll('.work-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      // Update active state
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show / hide cards
+      workItems.forEach(item => {
+        const cats = (item.dataset.categories || '').split(' ');
+        const matches = filter === 'all' || cats.includes(filter);
+        item.classList.toggle('hidden', !matches);
+      });
+    });
+  });
+
+  // Modal
+  const modal    = document.getElementById('modal');
+  const iframe   = document.getElementById('modal-iframe');
+  const closeBtn = document.getElementById('modal-close');
+
+  function openModal(id) {
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    iframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  // Clicks on featured cases
+  document.querySelectorAll('.case[data-id]').forEach(c =>
+    c.addEventListener('click', () => openModal(c.dataset.id))
+  );
+  // Clicks on grid items
+  workItems.forEach(item =>
+    item.addEventListener('click', () => openModal(item.dataset.id))
+  );
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
