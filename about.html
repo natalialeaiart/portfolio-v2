@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Natalia Le · AI Content Creator</title>
+  <meta name="description" content="About Natalia Le — Generative AI Specialist &amp; Visual Storyteller based in Riga. From HR to full-time AI creator in one year.">
+
+  <meta property="og:title"       content="About — Natalia Le · AI Content Creator">
+  <meta property="og:description" content="Generative AI Specialist and Visual Storyteller. From self-taught experiments to international full-time role in 14 months.">
+  <meta property="og:image"       content="https://img.youtube.com/vi/qfWMkP8nfNg/maxresdefault.jpg">
+  <meta property="og:url"         content="https://portfolio-v2-nataliale.vercel.app/about.html">
+  <meta property="og:type"        content="website">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23121014'/><text x='16' y='22' font-family='monospace' font-size='13' font-weight='bold' fill='%238B5CF6' text-anchor='middle'>NL</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── About hero ───────────────────────────────────── */
+    .about-hero {
+      padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem));
+      padding-bottom: clamp(4rem, 7vw, 6rem);
+      display: grid;
+      grid-template-columns: 0.65fr 2fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: start;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--pad-x);
+      padding-right: var(--pad-x);
+    }
+
+    .about-portrait {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--bg-raised);
+      /* When you have a custom photo, replace Pic.jpg with it */
+    }
+    .about-portrait img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .about-intro-tag { display: block; margin-bottom: 1.5rem; }
+    .about-intro-role {
+      font-family: var(--f-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      display: block;
+    }
+    /* Smaller h1 on About — name doesn't need to dominate */
+    .about-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      margin-bottom: 0.75rem;
+    }
+    .about-bio {
+      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+      color: var(--text-dim);
+      line-height: 1.75;
+      max-width: 52ch;
+      margin-bottom: 2.5rem;
+    }
+    .about-bio strong { color: var(--text); }
+
+    /* ── Journey timeline ─────────────────────────────── */
+    .timeline-wrap {
+      position: relative;
+      padding-left: 9rem;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 7.25rem;
+      top: 0.5rem;
+      bottom: 2rem;
+      width: 1px;
+      background: var(--divider);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 3.25rem;
+    }
+
+    /* dot on the timeline */
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem;
+      top: 0.38rem;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--accent);
+    }
+
+    /* last item: filled dot = "now" */
+    .tl-item.is-now::before {
+      background: var(--accent);
+    }
+
+    .tl-date {
+      position: absolute;
+      left: -9rem;
+      top: 0.1rem;
+      width: 7rem;
+      text-align: right;
+      font-family: var(--f-mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .tl-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .tl-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .tl-desc strong { color: var(--text); }
+    .tl-prize {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: var(--f-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── What I Do grid ───────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      margin-top: 2rem;
+    }
+    .svc-card {
+      background: var(--bg);
+      padding: 2rem 2rem 2.25rem;
+    }
+    .svc-number {
+      display: block;
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .svc-title {
+      font-family: var(--f-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .svc-desc {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+    .svc-tools {
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    /* ── Experience ───────────────────────────────────── */
+    .exp-item { padding: 2.25rem 0; border-top: 1px solid var(--divider); }
+    .exp-item:last-child { border-bottom: 1px solid var(--divider); }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+    .exp-title { font-size: 1.05rem; font-weight: 500; color: var(--text); }
+    .exp-meta  { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+    .exp-company { font-family: var(--f-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.875rem; }
+    .exp-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; max-width: 70ch; margin-bottom: 0.75rem; }
+    .exp-tools { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+
+    /* ── Side projects ────────────────────────────────── */
+    .side-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      margin-top: 2rem;
+    }
+    .side-card {
+      background: var(--bg-raised);
+      padding: 1.75rem 1.75rem 2rem;
+    }
+    .side-tag { display: block; margin-bottom: 1rem; }
+    .side-title { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
+    .side-desc { font-size: 0.875rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+    .side-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+    .side-links a { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); transition: color 0.2s; }
+    .side-links a:hover { color: var(--accent-lt); }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-hero { grid-template-columns: 1fr; }
+      .about-portrait { max-width: 320px; }
+      .side-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .timeline-wrap { padding-left: 7rem; }
+      .timeline-wrap::before { left: 5.5rem; }
+      .tl-date { left: -7rem; width: 5.5rem; font-size: 0.58rem; }
+      .tl-item::before { left: -1.6rem; }
+      .exp-header { flex-direction: column; gap: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ Navigation ═══════════════════════════════════════════ -->
+<nav class="nav" id="main-nav">
+  <a href="index.html" class="nav-logo">Natalia Le</a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ About Hero ═══════════════════════════════════════════ -->
+<section class="about-hero" aria-label="Introduction">
+  <div class="about-portrait reveal">
+    <!--
+      Photo: copy Pic.jpg from your old repo into this repo.
+      For best results, use a portrait-orientation crop (4:5 ratio).
+    -->
+    <img src="Pic.jpg" alt="Natalia Le" loading="eager">
+  </div>
+  <div class="reveal" style="--d:.1s">
+    <span class="section-tag about-intro-tag">About</span>
+    <h1 style="margin-bottom:0.75rem;">Natalia Le</h1>
+    <span class="about-intro-role">Generative AI Specialist · Visual Storyteller</span>
+    <p class="about-bio">
+      I started learning AI tools in <strong>September 2024</strong> and went from first experiments
+      to freelance clients, a competition win, and a full-time international role in just over a year.
+      My work sits at the intersection of AI and cinematic storytelling — I manage the full production
+      cycle, from script and storyboard to generation, sound, and final cut.
+    </p>
+    <p class="about-bio">
+      Before AI content, I spent <strong>12 years in HR</strong> across different industries in Riga —
+      managing employee relations, stakeholder communication, and people processes at scale.
+      <a href="https://cv-nataliale.vercel.app/" target="_blank" rel="noopener"
+         style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">Full CV →</a>
+    </p>
+    <div style="display:flex;gap:.875rem;flex-wrap:wrap;margin-top:.5rem;">
+      <a href="work.html" class="btn btn-primary">View work</a>
+      <a href="https://www.linkedin.com/in/natalja-levaskovica" class="btn btn-ghost" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ═══ Journey ═════════════════════════════════════════════ -->
+<div class="section">
+  <span class="section-tag reveal">Journey</span>
+
+  <div class="timeline-wrap">
+
+    <div class="tl-item reveal" style="--d:.05s">
+      <span class="tl-date">Sep<br>2024</span>
+      <h3 class="tl-title">First experiments</h3>
+      <p class="tl-desc">Started learning AI tools — first Midjourney course, then video generation.
+      Things took off fast.</p>
+    </div>
+
+    <div class="tl-item reveal" style="--d:.1s">
+      <span class="tl-date">Late<br>2024</span>
+      <h3 class="tl-title">First clients</h3>
+      <p class="tl-desc">Submitted a video to the KlingAI Ad Master competition.
+      <strong>First freelance orders for AI video ads</strong> arrived — clients found the work before I
+      had finished building a portfolio.</p>
+    </div>
+
+    <div class="tl-item reveal" style="--d:.15s">
+      <span class="tl-date">Mar<br>2025</span>
+      <h3 class="tl-title">KlingAI Ad Master — 3rd Place</h3>
+      <p class="tl-desc">Popularity Award · KlingAI Ad Master Dual Challenges.</p>
+      <span class="tl-prize">Prize: 6-month Pro Plan · 3,500 credits</span>
+    </div>
+
+    <div class="tl-item reveal" style="--d:.2s">
+      <span class="tl-date">Oct 2025<br>– Feb 2026</span>
+      <h3 class="tl-title">Full-time at an AI startup</h3>
+      <p class="tl-desc"><strong>AI Visual Content Creator &amp; Prompt Engineer</strong> at an early-stage
+      AI social app. Cyprus · Remote. Developed structured prompt frameworks for character-consistent,
+      script-based visual content. Integrated real users into AI-generated environments.</p>
+    </div>
+
+    <div class="tl-item is-now reveal" style="--d:.25s">
+      <span class="tl-date">Now</span>
+      <h3 class="tl-title">Freelancing</h3>
+      <p class="tl-desc">Open to collaborations, creative projects, and new roles — including
+      international remote.</p>
+    </div>
+
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ What I Do ═══════════════════════════════════════════ -->
+<div class="section section-sm">
+  <span class="section-tag reveal">What I do</span>
+
+  <div class="services-grid">
+
+    <div class="svc-card reveal">
+      <span class="svc-number">AI Video Production</span>
+      <h3 class="svc-title">Script to final cut,<br>fully AI-generated</h3>
+      <p class="svc-desc">Concept development, storyboard, character design,
+      animation, and editing — for social media, e-commerce, and brand promotion.</p>
+      <span class="svc-tools">Kling · Veo 3.1 · Filmora · CapCut</span>
+    </div>
+
+    <div class="svc-card reveal" style="--d:.08s">
+      <span class="svc-number">Image &amp; Characters</span>
+      <h3 class="svc-title">Prompt engineering<br>and character consistency</h3>
+      <p class="svc-desc">Image generation, custom LoRA training, character consistency
+      across scenes, compositing and retouching.</p>
+      <span class="svc-tools">NanoBanana · Seedream · MidJourney · Flux · PicsArt · Lightroom</span>
+    </div>
+
+    <div class="svc-card reveal" style="--d:.05s">
+      <span class="svc-number">AI Music &amp; Audio</span>
+      <h3 class="svc-title">Custom music, voice,<br>and ambient sound</h3>
+      <p class="svc-desc">Music and audio for ads, AI voice acting, ambient soundscapes.
+      Original songs written to commissioned and own poetry, available on streaming platforms
+      as NataliaLe Music.</p>
+      <span class="svc-tools">Suno · MMAudio · Eleven Labs</span>
+    </div>
+
+    <div class="svc-card reveal" style="--d:.13s">
+      <span class="svc-number">Automation &amp; Bots</span>
+      <h3 class="svc-title">AI workflows<br>and Telegram bots</h3>
+      <p class="svc-desc">AI-powered Telegram bots for automated news delivery and content generation.
+      Built with AI-assisted development — Python, GitHub, API integrations.</p>
+      <span class="svc-tools">Python · n8n · ChatGPT · Claude · Gemini APIs</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ Side Projects ════════════════════════════════════════ -->
+<div class="section section-sm">
+  <span class="section-tag reveal">Side projects</span>
+
+  <div class="side-grid">
+
+    <div class="side-card reveal">
+      <span class="side-tag mono">Portfolio</span>
+      <h3 class="side-title">This site</h3>
+      <p class="side-desc">Built entirely with AI-assisted development (ChatGPT, Gemini, Claude)
+      — no prior programming background, just curiosity and persistence.
+      The code is clean enough to edit, the design intentional enough to stand for something.</p>
+      <div class="side-links">
+        <a href="https://github.com/natalialeaiart/portfolio-v2" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="side-card reveal" style="--d:.08s">
+      <span class="side-tag mono">Bots · Automation</span>
+      <h3 class="side-title">AI News Telegram Bots</h3>
+      <p class="side-desc">Two bots that automatically collect and deliver daily AI news.
+      Built with Python and GitHub using AI coding assistants.</p>
+      <div class="side-links">
+        <a href="https://t.me/creative_ai_news" target="_blank" rel="noopener">@creative_ai_news</a>
+        <a href="https://t.me/ai_agents_daily" target="_blank" rel="noopener">@ai_agents_daily</a>
+      </div>
+    </div>
+
+    <div class="side-card reveal" style="--d:.16s">
+      <span class="side-tag mono">Music</span>
+      <h3 class="side-title">NataliaLe Music</h3>
+      <p class="side-desc">Original AI-generated songs written to my own and classic poetry.
+      Available on all major streaming platforms.</p>
+      <div class="side-links">
+        <a href="https://open.spotify.com/artist/4wDR1uVgBKSpSTrGkr31xF" target="_blank" rel="noopener">Spotify</a>
+        <a href="https://music.apple.com/us/artist/nataliale-music/1783613250" target="_blank" rel="noopener">Apple Music</a>
+        <a href="https://music.youtube.com/channel/UCZmtOYNYEEgHf-r50_uf6DQ" target="_blank" rel="noopener">YouTube Music</a>
+        <a href="https://www.deezer.com/en/artist/293099981" target="_blank" rel="noopener">Deezer</a>
+      </div>
+    </div>
+
+    <div class="side-card reveal" style="--d:.24s">
+      <span class="side-tag mono">AI Tools</span>
+      <h3 class="side-title">GPTs &amp; Guides</h3>
+      <p class="side-desc">Custom AI tools built for visual creators — open and free to use. Outpainting techniques, carousel design direction, cinematic scene building.</p>
+      <div class="side-links">
+        <a href="https://ai-outpainting-guide.vercel.app/" target="_blank" rel="noopener">AI Outpainting Guide →</a>
+        <a href="https://chatgpt.com/g/g-6a0c1d49fd8881918612b56af8e14943-ai-carousel-creative-director" target="_blank" rel="noopener">Carousel Director GPT →</a>
+        <a href="https://chatgpt.com/g/g-69ac4bfacfac8191b31e3e6057b27150-cinematic-scene-builder" target="_blank" rel="noopener">Cinematic Scene Builder GPT →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ Footer ═══════════════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer-top">
+    <div>
+      <span class="footer-tag">Open to collaborations &amp; new roles</span>
+      <p class="footer-name">Natalia Le</p>
+    </div>
+    <div class="footer-btns">
+      <a href="https://www.linkedin.com/in/natalja-levaskovica" class="btn btn-accent" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/NataliLe" class="btn btn-accent" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/37126106616" class="btn btn-accent" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <ul class="footer-links">
+      <li><a href="https://www.tiktok.com/@nataliale.ai.art" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://www.instagram.com/nataliale_aiart" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.threads.com/@nataliale_notes" target="_blank" rel="noopener">Threads</a></li>
+      <li><a href="https://t.me/AI_Test_Tube" target="_blank" rel="noopener">Telegram Channel</a></li>
+      <li><a href="https://github.com/natalialeaiart" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <span class="footer-locale">Riga, Latvia · EN · LV · RU</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
